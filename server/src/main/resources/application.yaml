@@ -21,3 +21,15 @@ management:
       exposure:
         include: '*'
         exclude: env,beans
+
+swagger2:
+  show: true
+  group-name: ${spring.application.name}
+  base-package: com.zyh432
+  title: dataStoragePlatform-server docs
+  description: dataStoragePlatform-server docs
+  terms-of-service-url: http://127.0.0.1:${server.port}
+  contact-name: panghu
+  contact-url: https://blog.panghu.com
+  contact-email: 790585941@qq.com
+  version: 1.0

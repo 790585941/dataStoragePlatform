@@ -59,7 +59,7 @@ public class Data<T> implements Serializable {
         return new Data<T>(ResponseCode.SUCCESS.getCode(),message);
     }
 
-    public static <T> Data<T> success(T data) {
+    public static <T> Data<T> data(T data) {
         return new Data<T>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getDesc(), data);
     }
 
