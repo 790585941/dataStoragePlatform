@@ -16,6 +16,8 @@
     <modules>
         <module>framework</module>
         <module>server</module>
+        <module>distribution</module>
+        <module>framework/orm</module>
     </modules>
     <packaging>pom</packaging>
 

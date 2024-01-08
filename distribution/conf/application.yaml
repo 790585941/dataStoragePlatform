@@ -12,15 +12,6 @@ spring:
       max-file-size: 3072MB
       max-request-size: 3072MB
 
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://127.0.0.1:3306/dataStoragePlatform?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSl=true&useUnicode=true&allowPublicKeyRetrieval=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-mybatis-plus:
-  mapper-locations: classpath:mappers/**/*.xml
-
 server:
   port: 8080
 
@@ -42,3 +33,8 @@ swagger2:
   contact-url: https://blog.panghu.com
   contact-email: 790585941@qq.com
   version: 1.0
+
+logging:
+  file: ${user.home}/logs/${spring.application.name}/${spring.application.name}.log
+  level:
+    root: INFO

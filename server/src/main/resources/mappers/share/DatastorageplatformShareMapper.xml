@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyh432.server.modules.share.mapper.DatastorageplatformShareMapper">
+
+    <resultMap id="BaseResultMap" type="com.zyh432.server.modules.share.entity.DatastorageplatformShare">
+            <id property="share_id" column="share_id" jdbcType="BIGINT"/>
+            <result property="share_name" column="share_name" jdbcType="VARCHAR"/>
+            <result property="share_type" column="share_type" jdbcType="TINYINT"/>
+            <result property="share_day_type" column="share_day_type" jdbcType="TINYINT"/>
+            <result property="share_day" column="share_day" jdbcType="TINYINT"/>
+            <result property="share_end_time" column="share_end_time" jdbcType="TIMESTAMP"/>
+            <result property="share_url" column="share_url" jdbcType="VARCHAR"/>
+            <result property="share_code" column="share_code" jdbcType="VARCHAR"/>
+            <result property="share_status" column="share_status" jdbcType="TINYINT"/>
+            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        share_id,share_name,share_type,
+        share_day_type,share_day,share_end_time,
+        share_url,share_code,share_status,
+        create_user,create_time
+    </sql>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyh432.server.modules.file.mapper.DatastorageplatformFileMapper">
+
+    <resultMap id="BaseResultMap" type="com.zyh432.server.modules.file.entity.DatastorageplatformFile">
+            <id property="file_id" column="file_id" jdbcType="BIGINT"/>
+            <result property="filename" column="filename" jdbcType="VARCHAR"/>
+            <result property="real_path" column="real_path" jdbcType="VARCHAR"/>
+            <result property="file_size" column="file_size" jdbcType="VARCHAR"/>
+            <result property="file_size_desc" column="file_size_desc" jdbcType="VARCHAR"/>
+            <result property="file_suffix" column="file_suffix" jdbcType="VARCHAR"/>
+            <result property="file_preview_content_type" column="file_preview_content_type" jdbcType="VARCHAR"/>
+            <result property="identifier" column="identifier" jdbcType="VARCHAR"/>
+            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        file_id,filename,real_path,
+        file_size,file_size_desc,file_suffix,
+        file_preview_content_type,identifier,create_user,
+        create_time
+    </sql>
+</mapper>

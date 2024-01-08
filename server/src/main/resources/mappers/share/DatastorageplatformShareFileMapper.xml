@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyh432.server.modules.share.mapper.DatastorageplatformShareFileMapper">
+
+    <resultMap id="BaseResultMap" type="com.zyh432.server.modules.share.entity.DatastorageplatformShareFile">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="share_id" column="share_id" jdbcType="BIGINT"/>
+            <result property="file_id" column="file_id" jdbcType="BIGINT"/>
+            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,share_id,file_id,
+        create_user,create_time
+    </sql>
+</mapper>

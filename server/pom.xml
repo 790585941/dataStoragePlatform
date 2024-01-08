@@ -34,6 +34,15 @@
             <version>1.5.21</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zyh432</groupId>
+            <artifactId>dataStoragePlatform-mybatis-plus</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

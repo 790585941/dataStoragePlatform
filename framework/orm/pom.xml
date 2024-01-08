@@ -5,18 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zyh432</groupId>
-        <artifactId>dataStoragePlatform-parent</artifactId>
+        <artifactId>dataStoragePlatform-framework</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>dataStoragePlatform-framework</artifactId>
-    <packaging>pom</packaging>
     <modules>
-        <module>core</module>
-        <module>web</module>
-        <module>swagger2</module>
-        <module>orm</module>
+        <module>mybatis-plus</module>
     </modules>
+
+    <artifactId>dataStoragePlatform-orm</artifactId>
+    <packaging>pom</packaging>
+
 
 
     <properties>
