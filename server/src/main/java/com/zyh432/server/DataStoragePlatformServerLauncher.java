@@ -16,8 +16,6 @@ import javax.validation.constraints.NotBlank;
 
 @SpringBootApplication(scanBasePackages = DataStoragePlatformConstants.BASE_COMPONENT_SCAN_PATH)
 @ServletComponentScan(basePackages = DataStoragePlatformConstants.BASE_COMPONENT_SCAN_PATH)
-@RestController
-@Api("测试接口类")
 @EnableTransactionManagement
 @MapperScan(basePackages = DataStoragePlatformConstants.BASE_COMPONENT_SCAN_PATH+ ".server.modules.**.mapper")
 public class DataStoragePlatformServerLauncher {
@@ -25,9 +23,4 @@ public class DataStoragePlatformServerLauncher {
         SpringApplication.run(DataStoragePlatformServerLauncher.class);
     }
 
-    @GetMapping("hello")
-    public Data<String> hello(@NotBlank(message = "name不能为空") String name){
-        System.out.println(Thread.currentThread().getContextClassLoader());
-        return Data.success("hello "+name+"! have changed!");
-    }
 }

@@ -2,6 +2,7 @@ package com.zyh432.server.modules.user.mapper;
 
 import com.zyh432.server.modules.user.entity.DatastorageplatformUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author 790585941
@@ -11,6 +12,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface DatastorageplatformUserMapper extends BaseMapper<DatastorageplatformUser> {
 
+    /**
+     * 通过用户名称查询用户设置的密保问题
+     * @param username
+     * @return
+     */
+    String selectQuestionByUsername(@Param("username") String username);
 }
 
 

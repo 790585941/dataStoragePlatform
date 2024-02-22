@@ -1,6 +1,7 @@
 package com.zyh432.web.exception;
 
 import com.zyh432.core.exception.DataStoragePlatformBusinessException;
+import com.zyh432.core.exception.DataStoragePlatformFrameworkException;
 import com.zyh432.core.response.Data;
 import com.zyh432.core.response.ResponseCode;
 import org.springframework.validation.BindException;
@@ -51,6 +52,12 @@ public class WebExceptionHandler {
         FieldError fieldError=e.getBindingResult().getFieldErrors().stream().findFirst().get();
         return Data.fail(ResponseCode.ERROR_PARAM.getCode(),fieldError.getDefaultMessage());
     }
+
+    @ExceptionHandler(value = DataStoragePlatformFrameworkException.class)
+    public Data dataStoragePlatformFrameworkExceptionHandler(DataStoragePlatformFrameworkException e){
+        return Data.fail(ResponseCode.ERROR.getCode(), e.getMessage());
+    }
+
     //捕获运行时异常并以特定的格式返回错误信息
     @ExceptionHandler(value = RuntimeException.class)
     public Data runtimeExceptionHandler(RuntimeException e){

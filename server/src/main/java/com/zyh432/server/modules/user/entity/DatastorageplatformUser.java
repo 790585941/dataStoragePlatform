@@ -19,7 +19,7 @@ public class DatastorageplatformUser implements Serializable {
      * 用户id
      */
     @TableId(value = "user_id")
-    private Long user_id;
+    private Long userId;
 
     /**
      * 用户名
@@ -55,13 +55,13 @@ public class DatastorageplatformUser implements Serializable {
      * 创建时间
      */
     @TableField(value = "create_time")
-    private Date create_time;
+    private Date createTime;
 
     /**
      * 更新时间
      */
     @TableField(value = "update_time")
-    private Date update_time;
+    private Date updateTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
