@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "com.zyh432.server.chunk-file-expiration-days",
+      "type": "java.lang.Integer",
+      "description": "分片文件的过期天数",
+      "defaultValue": 1
+    }
+  ]
+}

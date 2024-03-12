@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @description 针对表【datastorageplatform_error_log(错误日志表)】的数据库操作Service
 * @createDate 2024-01-08 22:27:05
 */
-public interface DatastorageplatformErrorLogService extends IService<DatastorageplatformErrorLog> {
+public interface IErrorLogService extends IService<DatastorageplatformErrorLog> {
 
 }

@@ -18,6 +18,7 @@
         <module>orm</module>
         <module>cache</module>
         <module>schedule</module>
+        <module>storage-engine</module>
     </modules>
 
 

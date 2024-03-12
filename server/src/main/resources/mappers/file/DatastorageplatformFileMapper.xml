@@ -5,16 +5,16 @@
 <mapper namespace="com.zyh432.server.modules.file.mapper.DatastorageplatformFileMapper">
 
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.file.entity.DatastorageplatformFile">
-            <id property="file_id" column="file_id" jdbcType="BIGINT"/>
-            <result property="filename" column="filename" jdbcType="VARCHAR"/>
-            <result property="real_path" column="real_path" jdbcType="VARCHAR"/>
-            <result property="file_size" column="file_size" jdbcType="VARCHAR"/>
-            <result property="file_size_desc" column="file_size_desc" jdbcType="VARCHAR"/>
-            <result property="file_suffix" column="file_suffix" jdbcType="VARCHAR"/>
-            <result property="file_preview_content_type" column="file_preview_content_type" jdbcType="VARCHAR"/>
+            <id property="fileId" column="file_id" jdbcType="BIGINT"/>
+            <result property="fileName" column="filename" jdbcType="VARCHAR"/>
+            <result property="realPath" column="real_path" jdbcType="VARCHAR"/>
+            <result property="fileSize" column="file_size" jdbcType="VARCHAR"/>
+            <result property="fileSizeDesc" column="file_size_desc" jdbcType="VARCHAR"/>
+            <result property="fileSuffix" column="file_suffix" jdbcType="VARCHAR"/>
+            <result property="filePreviewContentType" column="file_preview_content_type" jdbcType="VARCHAR"/>
             <result property="identifier" column="identifier" jdbcType="VARCHAR"/>
-            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

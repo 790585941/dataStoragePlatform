@@ -1,7 +1,14 @@
 package com.zyh432.server.modules.file.mapper;
 
+import com.zyh432.server.modules.file.context.FileSearchContext;
+import com.zyh432.server.modules.file.context.QueryFileListContext;
 import com.zyh432.server.modules.file.entity.DatastorageplatformUserFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zyh432.server.modules.file.vo.DataStoragePlatformUserFileVO;
+import com.zyh432.server.modules.file.vo.FileSearchResultVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 790585941
@@ -11,6 +18,20 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface DatastorageplatformUserFileMapper extends BaseMapper<DatastorageplatformUserFile> {
 
+    /**
+     * 查询用户的文件列表
+     * @param context
+     * @return
+     */
+    List<DataStoragePlatformUserFileVO> selectFileList(@Param("param") QueryFileListContext context);
+
+    /**
+     * 文件搜索
+     *
+     * @param context
+     * @return
+     */
+    List<FileSearchResultVO> searchFile(@Param("param") FileSearchContext context);
 }
 
 

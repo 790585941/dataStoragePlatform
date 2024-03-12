@@ -30,4 +30,34 @@ public interface DataStoragePlatformConstants {
      * 组件扫描基础路径
      */
     String BASE_COMPONENT_SCAN_PATH = "com.zyh432";
+
+    /**
+     * 问号常量
+     */
+    String QUESTION_MARK_STR = "?";
+
+    /**
+     * 等号常量
+     */
+    String EQUALS_MARK_STR = "=";
+
+    /**
+     * 逻辑与常量
+     */
+    String AND_MARK_STR = "&";
+
+    /**
+     * 左中括号常量
+     */
+    String LEFT_BRACKET_STR = "[";
+
+    /**
+     * 右中括号常量
+     */
+    String RIGHT_BRACKET_STR = "]";
+
+    /**
+     * 公用加密字符串
+     */
+    String COMMON_ENCRYPT_STR = "****";
 }

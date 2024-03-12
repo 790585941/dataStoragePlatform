@@ -25,37 +25,37 @@ public class DatastorageplatformErrorLog implements Serializable {
      * 日志内容
      */
     @TableField(value = "log_content")
-    private String log_content;
+    private String logContent;
 
     /**
      * 日志状态：0 未处理 1 已处理
      */
     @TableField(value = "log_status")
-    private Integer log_status;
+    private Integer logStatus;
 
     /**
      * 创建人
      */
     @TableField(value = "create_user")
-    private Long create_user;
+    private Long createUser;
 
     /**
      * 创建时间
      */
     @TableField(value = "create_time")
-    private Date create_time;
+    private Date createTime;
 
     /**
      * 更新人
      */
     @TableField(value = "update_user")
-    private Long update_user;
+    private Long updateUser;
 
     /**
      * 更新时间
      */
     @TableField(value = "update_time")
-    private Date update_time;
+    private Date updateTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

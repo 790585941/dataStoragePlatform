@@ -1,8 +1,8 @@
 spring:
   redis:
-    database=1
-    host=127.0.0.1
-    password=123456
+    database: 1
+    host: 127.0.0.1
+    password: 123456
   application:
     name: dataStoragePlatform-server
   output:
@@ -46,3 +46,21 @@ swagger2:
   contact-url: https://blog.panghu.com
   contact-email: 790585941@qq.com
   version: 1.0
+
+
+
+#com:
+#  zyh432:
+#      storage:
+#        engine:
+#          oss:
+#            bucket-name: datastorageplatform-zyh432-test-1
+#            endpoint: oss-cn-beijing.aliyuncs.com
+#            access-key-id: LTAI5tALf8iTdNpcvh3goJQb
+#            access-key-secret: fiIiMah0E0UTY7KgGVGcwZ7AE6w8Xr
+#            auto-create-bucket: true
+#          fdfs:
+#            connect-timeout: 600
+#            tracker-list:
+#              - 39.98.37.93:22122
+#            group: group1
