@@ -365,8 +365,65 @@ public class UserFileServiceImpl extends ServiceImpl<DatastorageplatformUserFile
     }
 
 
+    /**
+     * 递归查询所有的子文件信息
+     *
+     * @param records
+     * @return
+     */
+    @Override
+    public List<DatastorageplatformUserFile> findAllFileRecords(List<DatastorageplatformUserFile> records) {
+        List<DatastorageplatformUserFile> result = Lists.newArrayList(records);
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(result)) {
+            return result;
+        }
+        long folderCount = result.stream().filter(record -> Objects.equals(record.getFolderFlag(), FolderFlagEnum.YES.getCode())).count();
+        if (folderCount == 0) {
+            return result;
+        }
+        records.stream().forEach(record -> doFindAllChildRecords(result, record));
+        return result;
+    }
+
 
     /****************************************private **********************************/
+
+    /**
+     * 递归查询所有的子文件列表
+     * 忽略是否删除的标识
+     *
+     * @param result
+     * @param record
+     */
+    private void doFindAllChildRecords(List<DatastorageplatformUserFile> result, DatastorageplatformUserFile record) {
+        if (Objects.isNull(record)) {
+            return;
+        }
+        if (!checkIsFolder(record)) {
+            return;
+        }
+        List<DatastorageplatformUserFile> childRecords = findChildRecordsIgnoreDelFlag(record.getFileId());
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(childRecords)) {
+            return;
+        }
+        result.addAll(childRecords);
+        childRecords.stream()
+                .filter(childRecord -> FolderFlagEnum.YES.getCode().equals(childRecord.getFolderFlag()))
+                .forEach(childRecord -> doFindAllChildRecords(result, childRecord));
+    }
+
+    /**
+     * 查询文件夹下面的文件记录，忽略删除标识
+     *
+     * @param fileId
+     * @return
+     */
+    private List<DatastorageplatformUserFile> findChildRecordsIgnoreDelFlag(Long fileId) {
+        QueryWrapper queryWrapper = Wrappers.query();
+        queryWrapper.eq("parent_id", fileId);
+        List<DatastorageplatformUserFile> childRecords = list(queryWrapper);
+        return childRecords;
+    }
 
     /**
      * 搜索文件列表
