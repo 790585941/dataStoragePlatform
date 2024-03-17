@@ -385,6 +385,54 @@ public class UserFileServiceImpl extends ServiceImpl<DatastorageplatformUserFile
         return result;
     }
 
+    /**
+     * 递归查询所有的子文件信息
+     *
+     * @param fileIdList
+     * @return
+     */
+    @Override
+    public List<DatastorageplatformUserFile> findAllFileRecordsByFileIdList(List<Long> fileIdList) {
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(fileIdList)) {
+            return Lists.newArrayList();
+        }
+        List<DatastorageplatformUserFile> records = listByIds(fileIdList);
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+        return findAllFileRecords(records);
+    }
+
+    /**
+     * 实体转换
+     *
+     * @param records
+     * @return
+     */
+    @Override
+    public List<DataStoragePlatformUserFileVO> transferVOList(List<DatastorageplatformUserFile> records) {
+        if (org.apache.commons.collections.CollectionUtils.isEmpty(records)) {
+            return Lists.newArrayList();
+        }
+        return records.stream().map(fileConverter::datastorageplatformUserFile2DataStoragePlatformUserFileVO).collect(Collectors.toList());
+    }
+
+    /**
+     * 文件下载 不校验用户是否是否是上传用户
+     *
+     * @param context
+     */
+    @Override
+    public void downloadWithoutCheckUser(FileDownloadContext context) {
+        DatastorageplatformUserFile record = getById(context.getFileId());
+        if (Objects.isNull(record)) {
+            throw new DataStoragePlatformBusinessException("当前文件记录不存在");
+        }
+        if (checkIsFolder(record)) {
+            throw new DataStoragePlatformBusinessException("文件夹暂不支持下载");
+        }
+        doDownload(record, context.getResponse());
+    }
 
     /****************************************private **********************************/
 

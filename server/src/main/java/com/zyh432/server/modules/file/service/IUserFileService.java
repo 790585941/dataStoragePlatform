@@ -131,4 +131,25 @@ public interface IUserFileService extends IService<DatastorageplatformUserFile> 
      * @return
      */
     List<DatastorageplatformUserFile> findAllFileRecords(List<DatastorageplatformUserFile> records);
+
+    /**
+     * 递归查询所有的子文件信息
+     * @param shareFileIdList
+     * @return
+     */
+    List<DatastorageplatformUserFile> findAllFileRecordsByFileIdList(List<Long> shareFileIdList);
+
+    /**
+     * 实体转换
+     *
+     * @param records
+     * @return
+     */
+    List<DataStoragePlatformUserFileVO> transferVOList(List<DatastorageplatformUserFile> records);
+
+    /**
+     * 文件下载 不校验用户是否是否是上传用户
+     * @param fileDownloadContext
+     */
+    void downloadWithoutCheckUser(FileDownloadContext fileDownloadContext);
 }

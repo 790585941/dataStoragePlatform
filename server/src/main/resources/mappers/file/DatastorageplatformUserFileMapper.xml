@@ -40,6 +40,12 @@
         datastorageplatform_user_file
         WHERE
         user_id = #{param.userId}
+        <if test="param.fileIdList != null">
+            AND file_id IN
+            <foreach collection="param.fileIdList" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
         <if test="param.parentId != null and param.parentId != -1">
             AND parent_id = #{param.parentId}
         </if>

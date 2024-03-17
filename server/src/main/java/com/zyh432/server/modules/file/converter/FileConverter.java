@@ -3,6 +3,7 @@ package com.zyh432.server.modules.file.converter;
 import com.zyh432.server.modules.file.context.*;
 import com.zyh432.server.modules.file.entity.DatastorageplatformUserFile;
 import com.zyh432.server.modules.file.po.*;
+import com.zyh432.server.modules.file.vo.DataStoragePlatformUserFileVO;
 import com.zyh432.server.modules.file.vo.FolderTreeNodeVO;
 import com.zyh432.storage.engine.core.context.StoreFileChunkContext;
 import org.mapstruct.Mapper;
@@ -61,4 +62,6 @@ public interface FileConverter {
     @Mapping(target = "children", expression = "java(com.google.common.collect.Lists.newArrayList())")
     FolderTreeNodeVO datastorageplatformUserFile2FolderTreeNodeVO(DatastorageplatformUserFile record);
 
+
+    DataStoragePlatformUserFileVO datastorageplatformUserFile2DataStoragePlatformUserFileVO(DatastorageplatformUserFile record);
 }

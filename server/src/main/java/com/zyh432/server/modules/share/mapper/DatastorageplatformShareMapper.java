@@ -2,6 +2,10 @@ package com.zyh432.server.modules.share.mapper;
 
 import com.zyh432.server.modules.share.entity.DatastorageplatformShare;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zyh432.server.modules.share.vo.DataStoragePlatformShareUrlListVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 790585941
@@ -11,6 +15,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface DatastorageplatformShareMapper extends BaseMapper<DatastorageplatformShare> {
 
+    /**
+     * 查询用户的分享列表
+     * @param userId
+     * @return
+     */
+    List<DataStoragePlatformShareUrlListVO> selectShareVOListByUserId(@Param("userId") Long userId);
 }
 
 
