@@ -12,6 +12,7 @@ import com.zyh432.server.modules.file.enums.DelFlagEnum;
 import com.zyh432.server.modules.file.po.*;
 import com.zyh432.server.modules.file.service.IUserFileService;
 import com.zyh432.server.modules.file.vo.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
  * 文件模块控制器
  */
 @RestController
+@Api(tags = "文件模块")
 @Validated
 public class FileController {
     @Autowired

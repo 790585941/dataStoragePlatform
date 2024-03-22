@@ -304,6 +304,20 @@ public class ShareTest {
         Assert.notEmpty(fileVOList);
     }
 
+
+//    //测试创建一百万条文件
+//    @Test
+//    public void init(){
+//        CreateShareUrlContext context=new CreateShareUrlContext();
+//        context.setUserId(1770791649711640576L);
+//        context.setShareType(ShareTypeEnum.NEED_SHARE_CODE.getCode());
+//        context.setShareDayType(ShareDayTypeEnum.PERMANENT_VALIDITY.getCode());
+//        context.setShareFileIdList(Lists.newArrayList(1770792604536557568L));
+//        for (int i=10;i<100000;i++){
+//            context.setShareName("测试文件"+i);
+//            iShareService.create(context);
+//        }
+//    }
     /************************************************private************************************************/
 
     /**

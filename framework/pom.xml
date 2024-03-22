@@ -19,6 +19,7 @@
         <module>cache</module>
         <module>schedule</module>
         <module>storage-engine</module>
+        <module>bloom-filter</module>
     </modules>
 
 

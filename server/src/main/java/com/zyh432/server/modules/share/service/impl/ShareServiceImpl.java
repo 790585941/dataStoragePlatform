@@ -2,16 +2,22 @@ package com.zyh432.server.modules.share.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zyh432.bloom.filter.core.BloomFilter;
+import com.zyh432.bloom.filter.core.BloomFilterManager;
 import com.zyh432.core.constants.DataStoragePlatformConstants;
 import com.zyh432.core.exception.DataStoragePlatformBusinessException;
 import com.zyh432.core.response.ResponseCode;
 import com.zyh432.core.utils.IdUtil;
 import com.zyh432.core.utils.JwtUtil;
 import com.zyh432.core.utils.UUIDUtil;
+import com.zyh432.server.common.cache.ManualCacheService;
 import com.zyh432.server.common.config.storagePlatformServerConfig;
+import com.zyh432.server.common.event.log.ErrorLogEvent;
+import com.zyh432.server.modules.file.constants.FileConstants;
 import com.zyh432.server.modules.file.context.CopyFileContext;
 import com.zyh432.server.modules.file.context.FileDownloadContext;
 import com.zyh432.server.modules.file.context.QueryFileListContext;
@@ -30,16 +36,20 @@ import com.zyh432.server.modules.share.mapper.DatastorageplatformShareMapper;
 import com.zyh432.server.modules.share.vo.*;
 import com.zyh432.server.modules.user.entity.DatastorageplatformUser;
 import com.zyh432.server.modules.user.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.assertj.core.util.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.io.Serializable;
+import java.net.URLEncoder;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -48,8 +58,9 @@ import java.util.stream.Collectors;
 * @createDate 2024-01-08 22:28:02
 */
 @Service
+@Slf4j
 public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper, DatastorageplatformShare>
-    implements IShareService {
+    implements IShareService , ApplicationContextAware {
     @Autowired
     private storagePlatformServerConfig config;
 
@@ -61,6 +72,26 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
 
     @Autowired
     private IUserService iUserService;
+
+
+    private ApplicationContext applicationContext;
+
+    @Autowired
+    private BloomFilterManager manager;
+    @Autowired
+    private IShareService iShareService;
+
+    private static final String BLOOM_FILTER_NAME = "SHARE_SIMPLE_DETAIL";
+
+    @Autowired
+    @Qualifier(value = "shareManualCacheService")
+    private ManualCacheService<DatastorageplatformShare> cacheService;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
 
     /**
      * 创建分享链接
@@ -77,8 +108,12 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
     public DataStoragePlatformShareUrlVO create(CreateShareUrlContext context) {
         saveShare(context);
         saveShareFiles(context);
-        return assembleShareVO(context);
+        DataStoragePlatformShareUrlVO vo= assembleShareVO(context);
+        afterCreate(context,vo);
+        return vo;
     }
+
+
 
 
     /**
@@ -230,7 +265,201 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
     }
 
 
+    /**
+     * 刷新受影响的对应的分享的状态
+     * <p>
+     * 1、查询所有受影响的分享的ID集合
+     * 2、去判断每一个分享对应的文件以及所有的父文件信息均为正常，该种情况，把分享的状态变为正常
+     * 3、如果有分享的文件或者是父文件信息被删除，变更该分享的状态为有文件被删除
+     *
+     * @param allAvailableFileIdList
+     */
+    @Override
+    public void refreshShareStatus(List<Long> allAvailableFileIdList) {
+        List<Long> shareIdList = getShareIdListByFileIdList(allAvailableFileIdList);
+        if (CollectionUtils.isEmpty(shareIdList)) {
+            return;
+        }
+        Set<Long> shareIdSet = Sets.newHashSet(shareIdList);
+        shareIdSet.stream().forEach(this::refreshOneShareStatus);
+    }
+
+
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean removeById(Serializable id) {
+        //return super.removeById(id);
+        return cacheService.removeById(id);
+    }
+
+    /**
+     * 根据ID批量删除
+     * @param idList
+     * @return
+     */
+    @Override
+    public boolean removeByIds(Collection<? extends Serializable> idList) {
+        //return super.removeByIds(idList);
+        return cacheService.removeByIds(idList);
+    }
+
+    @Override
+    public boolean updateById(DatastorageplatformShare entity) {
+       // return super.updateById(entity);
+        return cacheService.updateById(entity.getShareId(),entity);
+    }
+
+
+    /**
+     * 根据ID批量更新
+     * @param entityList
+     * @return
+     */
+    @Override
+    public boolean updateBatchById(Collection<DatastorageplatformShare> entityList) {
+        //return super.updateBatchById(entityList);
+        if (CollectionUtils.isEmpty(entityList)){
+            return false;
+        }
+        Map<Long, DatastorageplatformShare> entityMap = entityList.stream().collect(Collectors.toMap(DatastorageplatformShare::getShareId, e -> e));
+        return cacheService.updateByIds(entityMap);
+    }
+
+    @Override
+    public DatastorageplatformShare getById(Serializable id) {
+        //return cacheService.getById(id);
+        return super.getById(id);
+    }
+
+    @Override
+    public List<DatastorageplatformShare> listByIds(Collection<? extends Serializable> idList) {
+        return super.listByIds(idList);
+        //return cacheService.getByIds(idList);
+    }
+
+    /**
+     * 滚动查询已存在的分享ID
+     * @param startId
+     * @param limit
+     * @return
+     */
+    @Override
+    public List<Long> rollingQueryShareId(Long startId, Long limit) {
+        return baseMapper.rollingQueryShareId(startId,limit);
+    }
+
+
     /*******************************************private*******************************************/
+
+    /**
+     * 创建分享链接后置处理
+     * @param context
+     * @param vo
+     */
+    private void afterCreate(CreateShareUrlContext context, DataStoragePlatformShareUrlVO vo) {
+        BloomFilter<Long> bloomFilter = manager.getFilter(BLOOM_FILTER_NAME);
+        if (Objects.nonNull(bloomFilter)){
+            bloomFilter.put(context.getRecord().getShareId());
+            log.info("create share,add share id to bloom filter,share id is{}",context.getRecord().getShareId());
+        }
+    }
+
+
+    /**
+     * 检查该文件以及所有的文件夹信息均为正常状态
+     *
+     * @param fileId
+     * @return
+     */
+    private boolean checkUpFileAvailable(Long fileId) {
+        DatastorageplatformUserFile record = iUserFileService.getById(fileId);
+        if (Objects.isNull(record)) {
+            return false;
+        }
+        if (Objects.equals(record.getDelFlag(), DelFlagEnum.YES.getCode())) {
+            return false;
+        }
+        if (Objects.equals(record.getParentId(), FileConstants.TOP_PARENT_ID)) {
+            return true;
+        }
+        return checkUpFileAvailable(record.getParentId());
+    }
+
+    /**
+     * 检查该分享所有的文件以及所有的父文件均为正常状态
+     *
+     * @param shareId
+     * @return
+     */
+    private boolean checkShareFileAvailable(Long shareId) {
+        List<Long> shareFileIdList = getShareFileIdList(shareId);
+        for (Long fileId : shareFileIdList) {
+            if (!checkUpFileAvailable(fileId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 刷新一个分享的分享状态
+     * <p>
+     * 1、查询对应的分享信息，判断有效
+     * 2、 去判断该分享对应的文件以及所有的父文件信息均为正常，该种情况，把分享的状态变为正常
+     * 3、如果有分享的文件或者是父文件信息被删除，变更该分享的状态为有文件被删除
+     *
+     * @param shareId
+     */
+    private void refreshOneShareStatus(Long shareId) {
+        DatastorageplatformShare record = getById(shareId);
+        if (Objects.isNull(record)) {
+            return;
+        }
+
+        ShareStatusEnum shareStatus = ShareStatusEnum.NORMAL;
+        if (!checkShareFileAvailable(shareId)) {
+            shareStatus = ShareStatusEnum.FILE_DELETED;
+        }
+
+        if (Objects.equals(record.getShareStatus(), shareStatus.getCode())) {
+            return;
+        }
+
+        doChangeShareStatus(record, shareStatus);
+    }
+
+    /**
+     * 执行刷新文件分享状态的动作
+     *
+     * @param record
+     * @param shareStatus
+     */
+    private void doChangeShareStatus(DatastorageplatformShare record, ShareStatusEnum shareStatus) {
+        record.setShareStatus(shareStatus.getCode());
+        if (!updateById(record)) {
+            applicationContext.publishEvent(new ErrorLogEvent(this, "更新分享状态失败，请手动更改状态，分享ID为：" + record.getShareId() + ", 分享" +
+                    "状态改为：" + shareStatus.getCode(), DataStoragePlatformConstants.ZERO_LONG));
+        }
+    }
+
+    /**
+     * 通过文件ID查询对应的分享ID集合
+     *
+     * @param allAvailableFileIdList
+     * @return
+     */
+    private List<Long> getShareIdListByFileIdList(List<Long> allAvailableFileIdList) {
+        QueryWrapper queryWrapper = Wrappers.query();
+        queryWrapper.select("share_id");
+        queryWrapper.in("file_id", allAvailableFileIdList);
+        List<Long> shareIdList = iShareFileService.listObjs(queryWrapper, value -> (Long) value);
+        return shareIdList;
+    }
+
 
     /**
      * 执行分享文件下载的动作
@@ -586,7 +815,7 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
         if (sharePrefix.lastIndexOf(DataStoragePlatformConstants.SLASH_STR) == DataStoragePlatformConstants.MINUS_ONE_INT.intValue()) {
             sharePrefix += DataStoragePlatformConstants.SLASH_STR;
         }
-        return sharePrefix + shareId;
+        return sharePrefix + URLEncoder.encode(IdUtil.encrypt(shareId));
     }
 
     /**

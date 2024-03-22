@@ -72,6 +72,11 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.zyh432</groupId>
+            <artifactId>dataStoragePlatform-bloom-filter-local</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.file.entity.DatastorageplatformFile">
             <id property="fileId" column="file_id" jdbcType="BIGINT"/>
-            <result property="fileName" column="filename" jdbcType="VARCHAR"/>
+            <result property="filename" column="filename" jdbcType="VARCHAR"/>
             <result property="realPath" column="real_path" jdbcType="VARCHAR"/>
             <result property="fileSize" column="file_size" jdbcType="VARCHAR"/>
             <result property="fileSizeDesc" column="file_size_desc" jdbcType="VARCHAR"/>

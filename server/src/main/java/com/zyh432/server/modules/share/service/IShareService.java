@@ -77,4 +77,19 @@ public interface IShareService extends IService<DatastorageplatformShare> {
      * @param context
      */
     void download(ShareFileDownloadContext context);
+
+    /**
+     * 刷新受影响的对应的分享的状态
+     *
+     * @param allAvailableFileIdList
+     */
+    void refreshShareStatus(List<Long> allAvailableFileIdList);
+
+    /**
+     * 滚动查询已存在的分享ID
+     * @param startId
+     * @param limit
+     * @return
+     */
+    List<Long> rollingQueryShareId(Long startId, Long limit);
 }

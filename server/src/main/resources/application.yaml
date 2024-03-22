@@ -24,6 +24,8 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mappers/**/*.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
   port: 8080
@@ -47,6 +49,20 @@ swagger2:
   contact-email: 790585941@qq.com
   version: 1.0
 
+
+
+com:
+  zyh432:
+    server:
+      share-prefix: http://127.0.0.1:5173/
+    bloom:
+      filter:
+        local:
+          items:
+            - name: SHARE_SIMPLE_DETAIL
+              funnel-type-name: LONG
+              expected-insertions: 100000
+              fpp: 0.01
 
 
 #com:

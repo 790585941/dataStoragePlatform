@@ -8,6 +8,7 @@ import com.zyh432.core.response.ResponseCode;
 import com.zyh432.core.utils.IdUtil;
 import com.zyh432.core.utils.JwtUtil;
 import com.zyh432.core.utils.PasswordUtil;
+import com.zyh432.server.common.cache.AnnotationCacheService;
 import com.zyh432.server.modules.file.constants.FileConstants;
 import com.zyh432.server.modules.file.context.CreateFolderContext;
 import com.zyh432.server.modules.file.entity.DatastorageplatformUserFile;
@@ -22,14 +23,14 @@ import com.zyh432.server.modules.user.vo.UserInfoVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.DuplicateFormatFlagsException;
-import java.util.Objects;
+import java.io.Serializable;
+import java.util.*;
 
 /**
 * @author 790585941
@@ -45,6 +46,10 @@ public class UserServiceImpl extends ServiceImpl<DatastorageplatformUserMapper, 
     private IUserFileService iUserFileService;
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    @Qualifier(value = "userAnnotationCacheService")
+    private AnnotationCacheService<DatastorageplatformUser> cacheService;
     /**
      * 用户注册的业务实现
      * 需要实现的功能点：
@@ -193,9 +198,55 @@ public class UserServiceImpl extends ServiceImpl<DatastorageplatformUserMapper, 
         return iUserFileService.getUserRootFile(userId);
     }
 
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean removeById(Serializable id) {
+        //return super.removeById(id);
+        return cacheService.removeById(id);
+    }
 
-/***************************
-    }*********************private************************************************/
+    /**
+     * 删除（根据ID批量删除）
+     * @param idList
+     * @return
+     */
+    @Override
+    public boolean removeByIds(Collection<? extends Serializable> idList) {
+        //return super.removeByIds(idList);
+        throw new DataStoragePlatformBusinessException("请更换手动缓存");
+    }
+
+
+    @Override
+    public boolean updateById(DatastorageplatformUser entity) {
+        //return super.updateById(entity);
+        return cacheService.updateById(entity.getUserId(),entity);
+    }
+
+    @Override
+    public boolean updateBatchById(Collection<DatastorageplatformUser> entityList) {
+        //return super.updateBatchById(entityList);
+        throw new DataStoragePlatformBusinessException("请更换手动缓存");
+    }
+
+    @Override
+    public DatastorageplatformUser getById(Serializable id) {
+        //return super.getById(id);
+        return cacheService.getById(id);
+    }
+
+    @Override
+    public List<DatastorageplatformUser> listByIds(Collection<? extends Serializable> idList) {
+        //return super.listByIds(idList);
+        throw new DataStoragePlatformBusinessException("请更换手动缓存");
+    }
+
+
+    /***********************************************private************************************************/
 
     /**
      * 退出用户的登录状态
