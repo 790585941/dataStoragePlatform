@@ -5,24 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.zyh432</groupId>
-        <artifactId>dataStoragePlatform-parent</artifactId>
+        <artifactId>dataStoragePlatform-lock</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>dataStoragePlatform-framework</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>core</module>
-        <module>web</module>
-        <module>swagger2</module>
-        <module>orm</module>
-        <module>cache</module>
-        <module>schedule</module>
-        <module>storage-engine</module>
-        <module>bloom-filter</module>
-        <module>lock</module>
-    </modules>
-
+    <artifactId>dataStoragePlatform-lock-core</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -30,4 +17,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.zyh432</groupId>
+            <artifactId>dataStoragePlatform-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-integration</artifactId>
+        </dependency>
+    </dependencies>
 </project>
