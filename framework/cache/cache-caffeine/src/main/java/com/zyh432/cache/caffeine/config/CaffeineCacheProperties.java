@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "com.zyh432.cache.caffeine")
+@ConfigurationProperties(prefix = "com.zyh432.cache.caffeine.config")
 public class CaffeineCacheProperties {
     /**
      * 缓存初始容量

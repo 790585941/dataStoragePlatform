@@ -173,9 +173,6 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
      * 3、查询分享的主体信息
      * 4、查询分享的文件列表
      * 5、查询分享者的信息
-     *
-     * @param context
-     * @return
      */
     @Override
     public ShareDetailVO detail(QueryShareDetailContext context) {
@@ -331,14 +328,14 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
 
     @Override
     public DatastorageplatformShare getById(Serializable id) {
-        //return cacheService.getById(id);
-        return super.getById(id);
+        return cacheService.getById(id);
+        //return super.getById(id);
     }
 
     @Override
     public List<DatastorageplatformShare> listByIds(Collection<? extends Serializable> idList) {
-        return super.listByIds(idList);
-        //return cacheService.getByIds(idList);
+        //return super.listByIds(idList);
+        return cacheService.getByIds(idList);
     }
 
     /**
@@ -357,8 +354,6 @@ public class ShareServiceImpl extends ServiceImpl<DatastorageplatformShareMapper
 
     /**
      * 创建分享链接后置处理
-     * @param context
-     * @param vo
      */
     private void afterCreate(CreateShareUrlContext context, DataStoragePlatformShareUrlVO vo) {
         BloomFilter<Long> bloomFilter = manager.getFilter(BLOOM_FILTER_NAME);

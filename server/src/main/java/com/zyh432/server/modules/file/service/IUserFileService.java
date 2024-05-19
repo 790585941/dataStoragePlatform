@@ -15,7 +15,7 @@ import java.util.List;
 public interface IUserFileService extends IService<DatastorageplatformUserFile> {
     /**
      * 创建文件夹信息
-     * @param userId
+     * @param createFolderContext
      * @return
      */
     Long createFolder(CreateFolderContext createFolderContext);

@@ -26,7 +26,7 @@ public class ResetPasswordPO implements Serializable {
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = "密码不能为空")
     @Length(min = 8, max = 16, message = "请输入8-16位的密码")
-    private String password;
+    private String newPassword;
 
     @ApiModelProperty(value = "提交重置密码的token")
     @NotBlank(message = "token信息不能为空")

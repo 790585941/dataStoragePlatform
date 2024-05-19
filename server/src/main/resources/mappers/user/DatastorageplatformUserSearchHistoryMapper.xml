@@ -6,14 +6,19 @@
 
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.user.entity.DatastorageplatformUserSearchHistory">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="user_id" column="user_id" jdbcType="BIGINT"/>
-            <result property="search_content" column="search_content" jdbcType="VARCHAR"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="searchContent" column="search_content" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_id,search_content,
         create_time,update_time
     </sql>
+    <select id="selectUserSearchHistories" resultType="com.zyh432.server.modules.user.vo.UserSearchHistoryVo">
+        SELECT search_content AS 'value' FROM datastorageplatform_user_search_history
+        WHERE user_id = #{param.userId} ORDER BY update_time DESC LIMIT 10
+
+    </select>
 </mapper>

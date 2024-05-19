@@ -1,4 +1,4 @@
-package com.zyh432.server.modules.share.cache;
+package com.zyh432.server.modules.share.service.cache;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zyh432.server.common.cache.AbstractManualCacheService;

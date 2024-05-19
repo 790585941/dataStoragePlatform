@@ -62,8 +62,6 @@ public class RecycleServiceImpl implements IRecycleService, ApplicationContextAw
      * 2、检查是不是可以还原
      * 3、执行文件还原的操作
      * 4、执行文件还原的后置操作
-     *
-     * @param context
      */
     @Override
     public void restore(RestoreContext context) {
@@ -112,7 +110,9 @@ public class RecycleServiceImpl implements IRecycleService, ApplicationContextAw
      * @param context
      */
     private void doDelete(DeleteContext context) {
-        List<Long> fileIdList = context.getFileIdList();
+        List<DatastorageplatformUserFile> allRecords = context.getAllRecords();
+        List<Long> fileIdList = allRecords.stream().map(DatastorageplatformUserFile::getFileId)
+                .collect(Collectors.toList());
         if (!iUserFileService.removeByIds(fileIdList)) {
             throw new DataStoragePlatformBusinessException("文件删除失败");
         }
@@ -181,7 +181,7 @@ public class RecycleServiceImpl implements IRecycleService, ApplicationContextAw
      * 检查要还原的文件名称是不是被占用
      * <p>
      * 1、要还原的文件列表中有同一个文件夹下面相同名称的文件 不允许还原
-     * 2、要还原的文件当前的父文件夹下面存在同名文件，我们不允许还原
+     * 2、要还原的文件当前的父文件夹下面存在同名文件，不允许还原
      *
      * @param context
      */

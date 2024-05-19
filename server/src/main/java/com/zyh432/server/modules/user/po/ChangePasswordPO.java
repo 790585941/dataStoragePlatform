@@ -17,7 +17,7 @@ public class ChangePasswordPO implements Serializable {
     @ApiModelProperty(value = "旧密码", required = true)
     @NotBlank(message = "旧密码不能为空")
     @Length(min = 8, max = 16, message = "请输入8-16位的旧密码")
-    private String oldPassword;
+    private String password;
 
     @ApiModelProperty(value = "新密码", required = true)
     @NotBlank(message = "新密码不能为空")

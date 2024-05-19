@@ -279,13 +279,13 @@ public class UserServiceImpl extends ServiceImpl<DatastorageplatformUserMapper, 
      */
     private void checkOldPassword(ChangePasswordContext changePasswordContext) {
         Long userId = changePasswordContext.getUserId();
-        String oldPassword = changePasswordContext.getOldPassword();
+        String password = changePasswordContext.getPassword();
         DatastorageplatformUser entity = getById(userId);
         if (Objects.isNull(entity)){
             throw new DataStoragePlatformBusinessException("用户信息不存在");
         }
         changePasswordContext.setEntity(entity);
-        String encOldPassword = PasswordUtil.encryptPassword(entity.getSalt(), oldPassword);
+        String encOldPassword = PasswordUtil.encryptPassword(entity.getSalt(), password);
         String dbOldPassword = entity.getPassword();
         if (!StringUtils.equals(encOldPassword,dbOldPassword)){
             throw new DataStoragePlatformBusinessException("旧密码不正确");
@@ -298,12 +298,12 @@ public class UserServiceImpl extends ServiceImpl<DatastorageplatformUserMapper, 
      */
     private void checkAndResetUserPassword(ResetPasswordContext resetPasswordContext) {
         String username = resetPasswordContext.getUsername();
-        String password = resetPasswordContext.getPassword();
+        String newPassword = resetPasswordContext.getNewPassword();
         DatastorageplatformUser entity = getDatastorageplatformUserByUsername(username);
         if (Objects.isNull(entity)){
             throw new DataStoragePlatformBusinessException("用户信息不存在");
         }
-        String newDbPassword=PasswordUtil.encryptPassword(entity.getSalt(),password);
+        String newDbPassword=PasswordUtil.encryptPassword(entity.getSalt(),newPassword);
         entity.setPassword(newDbPassword);
         entity.setUpdateTime(new Date());
         if (!updateById(entity)){

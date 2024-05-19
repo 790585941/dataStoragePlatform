@@ -48,7 +48,11 @@ public class FileController {
     @GetMapping("files")
     public Data<List<DataStoragePlatformUserFileVO>> list(@NotBlank(message = "父文件夹ID不能为空") @RequestParam(value = "parentId", required = false) String parentId,
                                                           @RequestParam(value = "fileTypes", required = false, defaultValue = FileConstants.ALL_FILE_TYPE) String fileTypes) {
-        Long realParentId= IdUtil.decrypt(parentId);
+        Long realParentId = -1L;
+        if (!FileConstants.ALL_FILE_TYPE.equals(parentId))
+        {
+            realParentId=IdUtil.decrypt(parentId);
+        }
         List<Integer> fileTypeArray=null;
         //按照特定分隔符拆分为整数列表
         if (!Objects.equals(FileConstants.ALL_FILE_TYPE,fileTypes)){
@@ -299,6 +303,7 @@ public class FileController {
     @GetMapping("file/breadcrumbs")
     public Data<List<BreadcrumbVO>> getBreadcrumbs(@NotBlank(message = "文件ID不能为空") @RequestParam(value = "fileId", required = false) String fileId) {
         QueryBreadcrumbsContext context = new QueryBreadcrumbsContext();
+
         context.setFileId(IdUtil.decrypt(fileId));
         context.setUserId(UserIdUtil.get());
         List<BreadcrumbVO> result = iUserFileService.getBreadcrumbs(context);

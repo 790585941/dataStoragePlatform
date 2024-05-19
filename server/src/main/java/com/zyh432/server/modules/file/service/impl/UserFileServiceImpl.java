@@ -186,7 +186,7 @@ public class UserFileServiceImpl extends ServiceImpl<DatastorageplatformUserFile
 
     /**
      * 文件分片上传
-     *1、上传实体文件
+     * 1、上传实体文件
      * 2、保存分片文件记录
      * 3、校验是否全部分片上传完成
      * @param context
@@ -309,8 +309,6 @@ public class UserFileServiceImpl extends ServiceImpl<DatastorageplatformUserFile
      * <p>
      * 1、条件校验
      * 2、执行动作
-     *
-     * @param context
      */
     @Override
     public void copy(CopyFileContext context) {
@@ -627,8 +625,6 @@ public class UserFileServiceImpl extends ServiceImpl<DatastorageplatformUserFile
      * 文件转移的条件校验
      * 1、目标文件必须是一个文件夹
      * 2、选中的要转移的文件列表中不能含有目标文件夹以及其子文件夹
-     *
-     * @param context
      */
     private void checkTransferCondition(TransferFileContext context) {
         Long targetParentId = context.getTargetParentId();

@@ -34,7 +34,6 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-
     @LoginIgnore
     @PostMapping("/register")
     public Data register(@Validated @RequestBody UserRegisterPO userRegisterPO){
@@ -76,7 +75,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     @LoginIgnore
-    @PostMapping("/user/check")
+    @PostMapping("/username/check")
     public Data checkUsername(@Validated @RequestBody CheckUsernamePO checkUsernamePO){
         CheckUsernameContext checkUsernameContext = userConverter.checkUsernamePO2CheckUsernameContext(checkUsernamePO);
         String question= iUserService.checkUsername(checkUsernameContext);

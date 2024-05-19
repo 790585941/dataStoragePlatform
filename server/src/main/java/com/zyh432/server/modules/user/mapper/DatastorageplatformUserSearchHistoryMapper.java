@@ -1,7 +1,12 @@
 package com.zyh432.server.modules.user.mapper;
 
+import com.zyh432.server.modules.user.context.QueryUserSearchHistoryContext;
 import com.zyh432.server.modules.user.entity.DatastorageplatformUserSearchHistory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zyh432.server.modules.user.vo.UserSearchHistoryVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 790585941
@@ -11,6 +16,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface DatastorageplatformUserSearchHistoryMapper extends BaseMapper<DatastorageplatformUserSearchHistory> {
 
+    List<UserSearchHistoryVo> selectUserSearchHistories(@Param("param") QueryUserSearchHistoryContext context);
 }
 
 

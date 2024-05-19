@@ -6,10 +6,10 @@
 
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.share.entity.DatastorageplatformShareFile">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="share_id" column="share_id" jdbcType="BIGINT"/>
-            <result property="file_id" column="file_id" jdbcType="BIGINT"/>
-            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="shareId" column="share_id" jdbcType="BIGINT"/>
+            <result property="fileId" column="file_id" jdbcType="BIGINT"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

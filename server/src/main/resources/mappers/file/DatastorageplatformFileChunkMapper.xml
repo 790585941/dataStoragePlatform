@@ -7,11 +7,11 @@
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.file.entity.DatastorageplatformFileChunk">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="identifier" column="identifier" jdbcType="VARCHAR"/>
-            <result property="real_path" column="real_path" jdbcType="VARCHAR"/>
-            <result property="chunk_number" column="chunk_number" jdbcType="INTEGER"/>
-            <result property="expiration_time" column="expiration_time" jdbcType="TIMESTAMP"/>
-            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="realPath" column="real_path" jdbcType="VARCHAR"/>
+            <result property="chunkNumber" column="chunk_number" jdbcType="INTEGER"/>
+            <result property="expirationTime" column="expiration_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

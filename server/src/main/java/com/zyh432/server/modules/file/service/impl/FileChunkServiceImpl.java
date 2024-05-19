@@ -49,7 +49,6 @@ public class FileChunkServiceImpl extends ServiceImpl<DatastorageplatformFileChu
     public synchronized void saveChunkFile(FileChunkSaveContext context) {
         doSaveChunkFile(context);
         doJudgeMergeFile(context);
-
     }
 
     /**

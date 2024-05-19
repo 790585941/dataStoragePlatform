@@ -1,7 +1,11 @@
 package com.zyh432.server.modules.user.service;
 
+import com.zyh432.server.modules.user.context.QueryUserSearchHistoryContext;
 import com.zyh432.server.modules.user.entity.DatastorageplatformUserSearchHistory;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zyh432.server.modules.user.vo.UserSearchHistoryVo;
+
+import java.util.List;
 
 /**
 * @author 790585941
@@ -10,4 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IUserSearchHistoryService extends IService<DatastorageplatformUserSearchHistory> {
 
+    /**
+     * 查询用户的搜索历史记录，默认十条
+     * @param context
+     * @return
+     */
+    List<UserSearchHistoryVo> getUserSearchHistories(QueryUserSearchHistoryContext context);
 }

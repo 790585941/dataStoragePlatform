@@ -19,7 +19,7 @@ public class ChangePasswordContext implements Serializable {
     /**
      * 旧密码
      */
-    private String oldPassword;
+    private String password;
 
     /**
      * 新密码

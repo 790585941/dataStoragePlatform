@@ -6,12 +6,12 @@
 
     <resultMap id="BaseResultMap" type="com.zyh432.server.modules.log.entity.DatastorageplatformErrorLog">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="log_content" column="log_content" jdbcType="VARCHAR"/>
-            <result property="log_status" column="log_status" jdbcType="TINYINT"/>
-            <result property="create_user" column="create_user" jdbcType="BIGINT"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="update_user" column="update_user" jdbcType="BIGINT"/>
-            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="logContent" column="log_content" jdbcType="VARCHAR"/>
+            <result property="logStatus" column="log_status" jdbcType="TINYINT"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

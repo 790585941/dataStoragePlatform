@@ -39,7 +39,7 @@ public class UserCacheService implements AnnotationCacheService<Datastorageplatf
      * @param entity
      * @return
      */
-    @CachePut(cacheNames = CacheConstants.dataStoragePlatform_CACHE_NAME,
+    @CacheEvict(cacheNames = CacheConstants.dataStoragePlatform_CACHE_NAME,
             keyGenerator = "userIdKeyGenerator")
     @Override
     public boolean updateById(Serializable id, DatastorageplatformUser entity) {

@@ -20,7 +20,7 @@ public class ResetPasswordContext implements Serializable {
     /**
      * 用户新密码
      */
-    private String password;
+    private String newPassword;
 
     /**
      * 重置密码的token信息

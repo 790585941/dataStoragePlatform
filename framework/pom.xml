@@ -21,6 +21,7 @@
         <module>storage-engine</module>
         <module>bloom-filter</module>
         <module>lock</module>
+        <module>stream</module>
     </modules>
 
 

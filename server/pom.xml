@@ -57,6 +57,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.zyh432</groupId>-->
+<!--            <artifactId>dataStoragePlatform-storage-engine-fastdfs</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.zyh432</groupId>
             <artifactId>dataStoragePlatform-storage-engine-local</artifactId>
@@ -75,6 +80,17 @@
         <dependency>
             <groupId>com.zyh432</groupId>
             <artifactId>dataStoragePlatform-bloom-filter-local</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyh432</groupId>
+            <artifactId>dataStoragePlatform-lock-local</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zyh432</groupId>
+            <artifactId>dataStoragePlatform-stream-rocketmq</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
